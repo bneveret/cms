@@ -1,10 +1,8 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-5">
-      <cms-contact-list></cms-contact-list>
-    </div>
-    <div class="col-md-7">
-      <cms-contact-detail></cms-contact-detail>
-    </div>
+<div class="row">
+  <div class="col-md-5">
+    <cms-contact-list (selectedContact)="onContactSelected($event)"></cms-contact-list>
+  </div>
+  <div class="col-md-7">
+    <cms-contact-detail [contact]="selectedContact"></cms-contact-detail>
   </div>
 </div>
