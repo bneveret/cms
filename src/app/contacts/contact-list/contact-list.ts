@@ -8,7 +8,7 @@ import { Contact } from '../contact.model'
   styleUrl: './contact-list.css'
 })
 export class ContactList {
-  @Output() selectedContact = new EventEmitter<Contact>();
+  @Output() selectedContactEvent = new EventEmitter<Contact>();
   
   contacts: Contact[] = [
     new Contact(
@@ -30,6 +30,6 @@ export class ContactList {
   ];
 
   onSelected(contact: Contact) {
-    this.selectedContact.emit(contact);
+    this.selectedContactEvent.emit(contact);
   }
 }

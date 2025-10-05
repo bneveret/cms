@@ -8,5 +8,5 @@ import { Contact } from '../contact.model';
   styleUrl: './contact-detail.css'
 })
 export class ContactDetail {
-  @Input() contact?: Contact;
+  @Input() contact!: Contact;
 }
