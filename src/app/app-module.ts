@@ -1,6 +1,7 @@
 import { NgModule, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
 
 import { App } from './app';
 import { Header } from './header';
@@ -17,6 +18,8 @@ import { MessageEdit } from './messages/message-edit/message-edit';
 import { Documents } from './documents/documents';
 import { Messages } from './messages/messages';
 import { DropdownDirective } from './shared/dropdown.directive';
+import { DocumentEdit } from './documents/document-edit/document-edit';
+import { ContactEdit } from './contacts/contact-edit/contact-edit';
 
 @NgModule({
   declarations: [
@@ -34,11 +37,14 @@ import { DropdownDirective } from './shared/dropdown.directive';
     MessageEdit,
     Documents,
     Messages,
-    DropdownDirective
+    DropdownDirective,
+    DocumentEdit,
+    ContactEdit
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    AppRoutingModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
