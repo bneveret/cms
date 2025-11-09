@@ -5,8 +5,20 @@
     <a class="btn btn-success pull-right" [routerLink]="['new']">New Contact</a>
     </div>
   </div>
-  <div class="panel-body">
-  <cms-contact-item *ngFor="let contact of contacts"
-  [contact]="contact">
-</cms-contact-item>
+  <div
+    id="contactList"
+    class="panel-body contact-list"
+    cdkDropList
+    [cdkDropListData]="contacts"
+    [cdkDropListConnectedTo]="['groupList']"
+  >
+    <div
+      class="contact-item"
+      *ngFor="let contact of contacts"
+      cdkDrag
+      [cdkDragData]="contact"
+    >
+    <cms-contact-item [contact]="contact">
+    </cms-contact-item>
+  </div>
 </div>

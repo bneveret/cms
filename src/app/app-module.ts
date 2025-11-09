@@ -20,6 +20,7 @@ import { Messages } from './messages/messages';
 import { DropdownDirective } from './shared/dropdown.directive';
 import { DocumentEdit } from './documents/document-edit/document-edit';
 import { ContactEdit } from './contacts/contact-edit/contact-edit';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -29,22 +30,23 @@ import { ContactEdit } from './contacts/contact-edit/contact-edit';
     ContactList,
     ContactDetail,
     ContactItem,
+    ContactEdit,
+    Documents,
     DocumentList,
-    DocumentItem,
     DocumentDetail,
+    DocumentItem,
+    DocumentEdit,
+    Messages,
     MessageList,
     MessageItem,
     MessageEdit,
-    Documents,
-    Messages,
-    DropdownDirective,
-    DocumentEdit,
-    ContactEdit
+    DropdownDirective
   ],
   imports: [
     BrowserModule,
     FormsModule,
-    AppRoutingModule
+    AppRoutingModule,
+    DragDropModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
