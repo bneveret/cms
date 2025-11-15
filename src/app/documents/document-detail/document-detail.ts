@@ -26,15 +26,11 @@ export class DocumentDetail implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // Subscribe to route params so we know which document id to show.
     this.paramsSub = this.route.params.subscribe((params: Params) => {
       this.currentId = params['id'];
 
-      // Try to get the document synchronously first.
       this.document = this.documentService.getDocument(this.currentId!);
 
-      // If it isn't available yet, subscribe to the document list changed event
-      // and trigger a load of documents if they haven't been fetched.
       if (!this.document) {
         if (!this.listSub) {
           this.listSub = this.documentService.documentListChangedEvent.subscribe(() => {
