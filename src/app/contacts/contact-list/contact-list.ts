@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 })
 export class ContactList implements OnInit, OnDestroy {
   contacts: Contact[] = [];
+  term: string ='';
   private subscription: Subscription;
 
   constructor(private contactService: ContactService) {}
@@ -36,5 +37,9 @@ export class ContactList implements OnInit, OnDestroy {
         this.contacts = contacts;
       }
     );
+  }
+
+  search(value: string) {
+    this.term = value;
   }
 }

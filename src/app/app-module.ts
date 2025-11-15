@@ -21,6 +21,7 @@ import { DropdownDirective } from './shared/dropdown.directive';
 import { DocumentEdit } from './documents/document-edit/document-edit';
 import { ContactEdit } from './contacts/contact-edit/contact-edit';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import { ContactsFilterPipe } from './contacts/contacts-filter-pipe';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
     MessageList,
     MessageItem,
     MessageEdit,
-    DropdownDirective
+    DropdownDirective,
+    ContactsFilterPipe
   ],
   imports: [
     BrowserModule,
