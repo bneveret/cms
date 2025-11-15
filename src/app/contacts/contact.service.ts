@@ -1,7 +1,7 @@
 import {Injectable, EventEmitter } from '@angular/core';
 import { Subject } from 'rxjs';
 import {Contact} from './contact.model';
-import {MOCKCONTACTS} from './MOCKCONTACTS';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
     providedIn: 'root'
@@ -10,12 +10,11 @@ export class ContactService {
   contactListChangedEvent = new Subject<Contact[]>();
   contactSelectedEvent = new EventEmitter<Contact>();
   contactChangedEvent = new EventEmitter<Contact[]>();
-  contacts: Contact [] =[];
+  contacts: Contact [] = [];
   maxContactId: number;
 
-  constructor() {
-    this.contacts = MOCKCONTACTS;
-    this.maxContactId = this.getMaxId();
+  constructor(private http: HttpClient) {
+    this.maxContactId = 0;
   }
 
   getMaxId(): number {
@@ -35,9 +34,7 @@ export class ContactService {
     this.maxContactId++;
     newContact.id = this.maxContactId.toString();
     this.contacts.push(newContact);
-
-    const contactListClone = this.contacts.slice();
-    this.contactListChangedEvent.next(contactListClone);
+    this.storeContacts();
   }
 
   updateContact(originalContact: Contact, newContact: Contact) {
@@ -48,13 +45,25 @@ export class ContactService {
 
     newContact.id = originalContact.id;
     this.contacts[pos] = newContact;
-
-    const contactListClone = this.contacts.slice();
-    this.contactListChangedEvent.next(contactListClone);
+    this.storeContacts();
   }
 
-  getContacts(): Contact[] {
-    return this.contacts.slice();
+  getContacts() {
+    this.http
+      .get<Contact[]>('https://cms-project-e0678-default-rtdb.firebaseio.com/contacts.json')
+      .subscribe(
+        (contacts: Contact[]) => {
+          this.contacts = contacts ?? [];
+          this.maxContactId = this.getMaxId();
+          this.contacts.sort((a, b) =>
+            a.name < b.name ? -1 : a.name > b.name ? 1 : 0
+          );
+          this.contactListChangedEvent.next(this.contacts.slice());
+        },
+        (error) => {
+          console.error(error);
+      }
+    );
   }
 
   getContact(id: string): Contact {
@@ -68,7 +77,21 @@ export class ContactService {
     if (pos < 0) return;
 
     this.contacts.splice(pos, 1);
-    const contactListClone = this.contacts.slice();
-    this.contactListChangedEvent.next(contactListClone);
+    this.storeContacts();
+  }
+
+  storeContacts() {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const contactString = JSON.stringify(this.contacts);
+
+    this.http
+      .put(
+        'https://cms-project-e0678-default-rtdb.firebaseio.com/contacts.json',
+        contactString,
+        { headers }
+      )
+      .subscribe(() => {
+        this.contactListChangedEvent.next(this.contacts.slice());
+      });
   }
 }

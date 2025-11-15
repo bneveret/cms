@@ -17,7 +17,7 @@ export class ContactList implements OnInit, OnDestroy {
   constructor(private contactService: ContactService) {}
 
   ngOnInit() {
-    this.contacts = this.contactService.getContacts();
+    this.contactService.getContacts();
 
     this.subscription = this.contactService.contactListChangedEvent.subscribe(
       (contactsList: Contact[]) => {
@@ -27,16 +27,13 @@ export class ContactList implements OnInit, OnDestroy {
   }
 
     ngOnDestroy() {
-    this.subscription.unsubscribe();
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
     }
 
   onSelected(contact: Contact) {
     this.contactService.contactSelectedEvent.emit(contact);
-    this.contactService.contactChangedEvent.subscribe(
-      (contacts: Contact[]) => {
-        this.contacts = contacts;
-      }
-    );
   }
 
   search(value: string) {

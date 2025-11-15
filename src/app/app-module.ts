@@ -1,7 +1,9 @@
 import { NgModule, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
+import { provideHttpClient } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { importProvidersFrom } from '@angular/core';
 
 import { App } from './app';
 import { Header } from './header';
@@ -52,7 +54,8 @@ import { ContactsFilterPipe } from './contacts/contacts-filter-pipe';
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
-    provideZonelessChangeDetection()
+    provideZonelessChangeDetection(),
+    provideHttpClient()
   ],
   bootstrap: [App]
 })
